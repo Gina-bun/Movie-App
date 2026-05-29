@@ -6,7 +6,9 @@ function App() {
   return (
     <>
       
-  <h1>Movie app in construction!</h1>
+ <div>
+
+ </div>
      
     </>
   )
