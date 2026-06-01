@@ -11,3 +11,11 @@ export const getMovies = async (genreId: number) => {
     return response.data.results
 }
 
+export const getTrendingMovies = async () => {
+    const response = await axios.get(`${BASE_URL}/trending/movie/week`, {
+        params: {api_key: API_KEY}
+    })
+    return response.data.results
+
+    console.log(response.data.results)
+}

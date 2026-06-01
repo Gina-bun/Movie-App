@@ -1,10 +1,10 @@
-
+import { HeroSection } from "./hero-section/HeroSection"
 
 
 export function LandingPage(){
     return (
         <>
-        <h1 className="text-center text-4xl">Landing Page</h1>
+        <HeroSection />
         </>
     )
 }
