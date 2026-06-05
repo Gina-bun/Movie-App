@@ -19,3 +19,11 @@ export const getTrendingMovies = async () => {
 
     console.log(response.data.results)
 }
+
+export const getGenres = async () => {
+    const response = await axios.get(`${BASE_URL}/genre/movie/list`, {
+        params: {api_key: API_KEY}
+    })
+
+    return response.data.genres
+}
