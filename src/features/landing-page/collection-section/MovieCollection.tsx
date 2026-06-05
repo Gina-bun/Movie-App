@@ -20,7 +20,7 @@ export function MovieCollection(){
                     <MovieCategory
                     key={genre.id}
                     genre={genre.name}
-                    genreId={genre.genreId}                  />
+                    genreId={genre.id}                  />
                 ))
             }
         </div>

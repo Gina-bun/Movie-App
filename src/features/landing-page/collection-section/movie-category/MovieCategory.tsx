@@ -18,6 +18,7 @@ export function MovieCategory({genre, genreId}: {genre:string, genreId:number}){
             <div className="movie-lineup grid grid-cols-2 gap-2">
                 {movies.map((movie) => (
                     <MovieItem
+                    movieId={movie.id}
                     key={movie.id}
                     movieUrl={`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`}
                     title={movie.title}
