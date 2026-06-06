@@ -1,0 +1,42 @@
+.soda-dropdown{
+  display:flex;
+  gap:1rem;
+  padding:0.75rem;
+  background:var(--nav-bg, #fff);
+  color:var(--text, #111);
+}
+.dropdown-left, .dropdown-right{
+  flex:1;
+}
+.dropdown-title{
+  font-weight:600;
+  margin-bottom:0.5rem;
+}
+.dropdown-list{
+  display:flex;
+  flex-direction:column;
+  gap:0.35rem;
+}
+.dropdown-link{
+  color:inherit;
+  text-decoration:none;
+  padding:0.25rem 0.35rem;
+  display:inline-block;
+}
+.genre-grid{
+  display:flex;
+  flex-wrap:wrap;
+  gap:0.4rem;
+}
+.genre-pill{
+  background:rgba(0,0,0,0.06);
+  padding:0.35rem 0.6rem;
+  border-radius:999px;
+  text-decoration:none;
+  color:inherit;
+  font-size:0.9rem;
+}
+
+@media(min-width:700px){
+  .soda-dropdown{ padding:1rem; }
+}
