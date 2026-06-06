@@ -43,10 +43,10 @@ export const getMovieDetails = async (movieId: number) => {
 }
 
 //to search movies
-export const searchMovies = async (searchedMovie) => {
+export const searchMovies = async (searchedMovie: string) => {
     const response = await axios.get(`${BASE_URL}/search/multi`, {
         params: {api_key: API_KEY, query: searchedMovie}
     })
 
-    return response.data.results
+    return response.data.results.slice(0, 5)//display only 5 movies in search results at a time
 }
