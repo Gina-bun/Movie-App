@@ -14,11 +14,11 @@ interface WatchlistContextType {
 }
 
 
-export const WatchlistContext = createContext<WatchlistContextType>(
-    watchlist : Movie[]
+export const WatchlistContext = createContext<WatchlistContextType>({
+    watchlist : [],
     addToWatchlist: () => {},
-    removeFromWatchlist: () = {},
-)
+    removeFromWatchlist: () => {},
+})
 
 
 export const WatchlistProvider = ({children}: {children: ReactNode}) => {
