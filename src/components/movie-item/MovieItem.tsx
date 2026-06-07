@@ -30,14 +30,15 @@ export function MovieItem({
       >
         <Bookmark
           style={{ color: "gray" }}
-          onClick={() =>
+          onClick={() => {
+            if (movieId === undefined) return
             addToWatchlist({
               movieId,
               movieUrl,
               title,
               releaseDate,
             })
-          }
+          }}
         />
       </div>
       <div className="movie-info h-fit p-1 ">
