@@ -10,7 +10,7 @@ export function WatchListPage(){
         <h1 className="text-center text-4xl">Watch List Page</h1>
         <div>
             {
-                watchlist.map((movie) => (
+                watchlist.map((movie:any) => (
                    <MovieItem
                       key={movie.movieId}
                       movieId={movie.movieId}

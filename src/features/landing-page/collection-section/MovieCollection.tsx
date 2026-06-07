@@ -16,7 +16,7 @@ export function MovieCollection(){
         <>
         <div className="collection p-2">
             {
-                genres.map((genre) => (
+                genres.map((genre: any) => (
                     <MovieCategory
                     key={genre.id}
                     genre={genre.name}

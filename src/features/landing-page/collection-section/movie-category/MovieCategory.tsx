@@ -16,7 +16,7 @@ export function MovieCategory({genre, genreId}: {genre:string, genreId:number}){
         <div className="category py-3">
             <h1 className="text-2xl font-bold">{genre}</h1>
             <div className="movie-lineup grid grid-cols-2 gap-2">
-                {movies.map((movie) => (
+                {movies.map((movie: any) => (
                     <MovieItem
                     movieId={movie.id}
                     key={movie.id}
