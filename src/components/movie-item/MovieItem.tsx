@@ -18,9 +18,9 @@ export function MovieItem({
   const { addToWatchlist } = useContext(WatchlistContext);
 
   const content = (
-    <div className="movie-item border rounded-sm h-55 bg-amber-200">
+    <div className="movie-item flex flex-col shrink-0 border rounded-sm h-67 bg-amber-200 w-50">
       <div
-        className="movie-poster min-h-2/3 flex justify-end p-1"
+        className="movie-poster h-40 flex justify-end p-1"
         style={{
           backgroundImage: `url(${movieUrl})`,
           backgroundPosition: "center",
@@ -30,18 +30,19 @@ export function MovieItem({
       >
         <Bookmark
           style={{ color: "gray" }}
-          onClick={() =>
+          onClick={() => {
+            if (movieId === undefined) return
             addToWatchlist({
               movieId,
               movieUrl,
               title,
               releaseDate,
             })
-          }
+          }}
         />
       </div>
-      <div className="movie-info h-fit p-1 ">
-        <p className="movie-title">{title}</p>
+      <div className="movie-info h-fit px-2 pt-1 ">
+        <p className="movie-title text-wrap">{title}</p>
         <p className="movie-date">{releaseDate}</p>
       </div>
     </div>
