@@ -13,14 +13,14 @@ export function MovieItem({
   movieId?: number | string;
   movieUrl: string;
   title: string;
-  releaseDate: string;
+  releaseDate: number;
 }) {
   const { addToWatchlist } = useContext(WatchlistContext);
 
   const content = (
     <div className="movie-item flex flex-col shrink-0 border rounded-sm h-67 bg-amber-200 w-50">
       <div
-        className="movie-poster h-40 flex justify-end p-1"
+        className="movie-poster h-40 flex justify-end p-1 bg-gray-200"
         style={{
           backgroundImage: `url(${movieUrl})`,
           backgroundPosition: "center",
