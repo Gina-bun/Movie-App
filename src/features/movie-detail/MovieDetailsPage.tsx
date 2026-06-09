@@ -39,7 +39,6 @@ export function MovieDetailsPage() {
 
   const productionCompanies = movieItem.production_companies;
 
-  console.log(productionCompanies);
 
   return (
     <>
