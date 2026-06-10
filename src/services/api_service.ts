@@ -33,10 +33,10 @@ export const getGenres = async () => {
     return response.data.genres
 }
 
-//to fetch movie details
+//to fetch movies (for details)
 export const getMovieDetails = async (movieId: number) => {
     const response = await axios.get(`${BASE_URL}/movie/${movieId}`, {
-        params: {api_key: API_KEY}
+        params: {api_key: API_KEY, append_to_response: "videos,credits,similar"}
     })
 
     return response.data 
@@ -50,3 +50,4 @@ export const searchMovies = async (searchedMovie: string) => {
 
     return response.data.results.slice(0, 5)//display only 5 movies in search results at a time
 }
+

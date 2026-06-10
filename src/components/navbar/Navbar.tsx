@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Searchbar } from "./search-bar/Searchbar";
 import { Menu, ChevronDown } from "lucide-react";
@@ -30,6 +30,21 @@ export function Navbar() {
   const [mobileCategoryOpen, setMobileCategoryOpen] = useState(false);
   const [desktopCategoryOpen, setDesktopCategoryOpen] = useState(false);
 
+  const closeMenu = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if(closeMenu.current && !closeMenu.current.contains(event.target as Node)){
+        setMenuOpen(false)
+        setMobileCategoryOpen(false)
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
+
   return (
     <nav className="navbar">
       <div className="navbar-top flex items-center justify-between p-4">
@@ -37,7 +52,7 @@ export function Navbar() {
           <h1 className="font-bold text-2xl">sodaFlix</h1>
         </Link>
 
-        <div className="navbar-actions flex items-center gap-3">
+        <div ref={closeMenu} className="navbar-actions  flex items-center gap-3">
           <button
             type="button"
             className="menu-toggle"
@@ -50,14 +65,12 @@ export function Navbar() {
           >
             <Menu size={25} />
           </button>
-        </div>
-      </div>
 
-      <div className="navbar-search-row px-4 pb-4">
-        <Searchbar />
-      </div>
-
-      <div className={`mobileNav ${menuOpen ? "open" : ""}`}>
+           <div 
+      
+      className={`mobileNav ${menuOpen ? "open" : ""} absolute w-full`}
+      style={{top:"4rem", right: "0", zIndex: "99"}}
+      >
         <div className="mobile-menu-dropdown">
           <Link to="/" className="nav-link">
             Home
@@ -93,6 +106,14 @@ export function Navbar() {
           </Link>
         </div>
       </div>
+        </div>
+      </div>
+
+      <div className="navbar-search-row px-4 pb-4">
+        <Searchbar />
+      </div>
+
+     
 
       <div className="desktopNav">
         <div className="desktop-nav-row flex items-center justify-between gap-8 p-4">

@@ -10,6 +10,20 @@ export function Searchbar() {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
+  const closeSearchPopup = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+       if(closeSearchPopup.current && !closeSearchPopup.current.contains(event.target as Node)){
+        setIsOpen(false)
+    }
+  }
+
+  document.addEventListener("mousedown", handleClickOutside)
+
+  return () => document.removeEventListener("mousedown", handleClickOutside)
+  }, [])
+
   const debouncedSearch = useRef(
     debounce(async (searchTerm: string) => {
       if (searchTerm.length < 2) {
@@ -17,6 +31,7 @@ export function Searchbar() {
         setIsOpen(false);
         return;
       }
+
       const data = await searchMovies(searchTerm);
       setResults(data);
       setIsOpen(true);
@@ -35,7 +50,7 @@ export function Searchbar() {
 
   return (
     <>
-      <div style={{ position: "relative" }}>
+      <div ref={closeSearchPopup} style={{ position: "relative" }}>
         <div
           id="search-container"
           className="flex border rounded-md max-sm:w-70 p-1 max-sm:self-center"
@@ -53,14 +68,15 @@ export function Searchbar() {
         {isOpen && results.length > 0 && (
           <div 
           style={{position: "absolute"}}
-          className="search-dropdown bg-amber-100 mt-2 p-2 max-sm:w-70 max-md:w-60 rounded-md">
+          className="search-dropdown bg-amber-50 mt-2 p-2 max-sm:w-70 max-md:w-60 rounded-md">
             {results.map((movie) => (
               <div
                 key={movie.id}
                 onClick={() => handleSelect(movie)}
                 className="search-result-item"
               >
-                <p>{movie.title || movie.name}</p>
+                <p>{movie.title || movie.name} {movie.genre}</p>
+                <p>{`${new Date(movie.release_date).getFullYear()}`}</p>
               </div>
             ))}
           </div>

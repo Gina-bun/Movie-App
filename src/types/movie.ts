@@ -1,5 +1,5 @@
 export interface Movie {
-    id: number
+    movieId: number
     title: string
     type: "movie" | "tv" | "series" | "documentary" 
     genre: string
