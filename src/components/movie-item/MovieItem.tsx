@@ -15,7 +15,25 @@ export function MovieItem({
   title: string;
   releaseDate: number;
 }) {
-  const { addToWatchlist } = useContext(WatchlistContext);
+  const { addToWatchlist, removeFromWatchlist, watchlist } = useContext(WatchlistContext);
+  
+
+  const addRemoveMovieToggle = () => {
+    if (movieId === undefined) return
+
+    const hasMovie = watchlist.some((item) => item.movieId === movieId);
+
+    if (hasMovie) {
+      removeFromWatchlist(movieId);
+    }else {
+      addToWatchlist({
+        movieId,
+        movieUrl,
+        title,
+        releaseDate,
+      });
+    }
+  };
 
   const content = (
     <div className="movie-item flex flex-col shrink-0 border rounded-sm h-67 bg-amber-200 w-50">
@@ -30,14 +48,11 @@ export function MovieItem({
       >
         <Bookmark
           style={{ color: "gray" }}
-          onClick={() => {
-            if (movieId === undefined) return
-            addToWatchlist({
-              movieId,
-              movieUrl,
-              title,
-              releaseDate,
-            })
+          onClick={(e) => {
+            e.stopPropagation()
+            e.preventDefault()
+            if (movieId === undefined) return;
+            addRemoveMovieToggle()
           }}
         />
       </div>

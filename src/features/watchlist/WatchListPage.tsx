@@ -7,19 +7,23 @@ export function WatchListPage(){
 
     return (
         <>
-        <h1 className="text-center text-4xl">Watch List Page</h1>
-        <div>
-            {
+        <h1 className="text-center text-2xl">Watch List Page</h1>
+        <div className="grid grid-cols-2">
+            {watchlist.length === 0 ? (
+                <p>No movies saved yet</p>
+            ): (
                 watchlist.map((movie) => (
-                   <MovieItem
+                 
+                      <MovieItem
                       key={movie.movieId}
                       movieId={movie.movieId}
                       movieUrl={movie.movieUrl}
                       title={movie.title}
                       releaseDate={movie.releaseDate}
                       />
+                
                 ))
-            }
+            )}
         </div>
         </>
     )
