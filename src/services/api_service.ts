@@ -51,6 +51,7 @@ export const searchMovies = async (searchedMovie: string) => {
 }
 
 // FOR TV shows
+//get genres for tv shows
 export const getTVGenres = async () => {
     const response = await axios.get(`${BASE_URL}/genre/tv/list`, {
         params: {api_key: API_KEY}
@@ -58,3 +59,13 @@ export const getTVGenres = async () => {
     return response.data.genres
 }
 
+//get tv show details
+export const getTVDetails = async (id: number) => {
+    const response = await axios.get(`${BASE_URL}/tv/${id}`, {
+        params: { 
+            api_key: API_KEY,
+            append_to_response: "videos,credits,similar"
+        }
+    })
+    return response.data
+}

@@ -1,35 +1,47 @@
-import { getMovieDetails } from "../../services/api_service";
+import { getMovieDetails, getTVDetails } from "../../services/api_service";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { MovieItem } from "../../components/movie-item/MovieItem";
 
 export function MovieDetailsPage() {
   const { movieId } = useParams<{ movieId?: string }>();
-  const [movieItem, setMovieItem] = useState<any>(null);
+  const [movieItem, setMovieItem] = useState(null);
+  const location = window.location.pathname
+  const isTV = location.includes("/tv/")
 
   useEffect(() => {
     if (!movieId) return;
-
     const idNum = Number(movieId);
-    if (isNaN(idNum)) return;
 
-    getMovieDetails(idNum).then(setMovieItem).catch(console.error);
-  }, [movieId]);
+     if (isTV) {
+        getTVDetails(idNum).then(setMovieItem).catch(console.error)
+    } else {
+        getMovieDetails(idNum).then(setMovieItem).catch(console.error)
+    }
+    
+  }, [movieId, isTV]);
 
   if (!movieItem) {
     return <div>Loading...</div>;
   }
 
+  const title = movieItem.title || movieItem.name
   const trailer = movieItem.videos?.results?.find(
     (video: any) => video.type === "Trailer" && video.site === "YouTube",
   );
 
   const cast = movieItem.credits.cast;
 
-  const releaseDate: Date = new Date(movieItem.release_date);
-  const movieYear: number = Number(releaseDate.getFullYear());
+  const releaseDate: Date = new Date(movieItem.release_date || movieItem.first_air_date);
+  const movieYear = isNaN(releaseDate.getFullYear()) ? 'N/A' : releaseDate.getFullYear();
 
-  const genre = movieItem.genres[0].name;
+  const runtime = movieItem.runtime 
+    ? `${movieItem.runtime} mins` 
+    : movieItem.episode_run_time?.[0] 
+    ? `${movieItem.episode_run_time[0]} mins/ep`
+    : 'N/A'
+
+  const genre = movieItem.genres?.[0]?.name || 'N/A';
 
   const allGenres = movieItem.genres;
 
@@ -52,12 +64,12 @@ export function MovieDetailsPage() {
             backgroundPosition: "center",
           }}
         >
-          <h1 className="font-bold text-xl">{movieItem.title}</h1>
+          <h1 className="font-bold text-xl">{title}</h1>
           <div className="backdrop-deets flex gap-2 justify-center mb-15 font-light">
             <p>{movieYear}</p>
             <p>{genre}</p>
             <p>{movieItem.popularity}</p>
-            <p>{movieItem.runtime} mins</p>
+            <p>{runtime}</p>
           </div>
         </div>
 
@@ -168,7 +180,7 @@ export function MovieDetailsPage() {
                 <MovieItem
                   movieId={tvshow.id}
                   movieUrl={`https://image.tmdb.org/t/p/w500${tvshow.backdrop_path}`}
-                  title={tvshow.title}
+                  title={tvshow.title || tvshow.name}
                   releaseDate={movieYear}
                 />
               </div>
