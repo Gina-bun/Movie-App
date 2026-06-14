@@ -67,7 +67,7 @@ export function MovieItem({
         />
       </div>
       <div className="movie-info h-fit px-2 pt-1 ">
-        <p className="movie-title text-wrap">{title}</p>
+        <p className="movie-title text-wrap font-medium">{title.length > 25 ? title.slice(0,25) + "..." : title }</p>
         <div className="flex items-center gap-3">
           <p className="genre">{genre}</p>
           <Diamond size={6} style={{fill:"black"}}/>
