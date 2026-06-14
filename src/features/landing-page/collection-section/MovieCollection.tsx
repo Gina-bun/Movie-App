@@ -1,5 +1,5 @@
 import { MovieCategory } from "./movie-category/MovieCategory"
-import { getMovieGenres, getTVGenres } from "../../../services/api_service"
+import { getMovieGenres } from "../../../services/api_service"
 import { useEffect, useState } from "react"
 
 export function MovieCollection(){

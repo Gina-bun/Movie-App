@@ -2,18 +2,22 @@ import { useContext } from "react";
 import { WatchlistContext } from "../../context/WatchlistContext";
 import "./MovieItem.css";
 import { Link } from "react-router-dom";
-import { Bookmark } from "lucide-react";
+import { Bookmark, Diamond } from "lucide-react";
 
 export function MovieItem({
   movieId,
   movieUrl,
   title,
   releaseDate,
+  genre, 
+  mediaType
 }: {
   movieId?: number | string;
   movieUrl: string;
   title: string;
   releaseDate: number | string;
+  genre?: string;
+  mediaType?:string
 }) {
   const { addToWatchlist, removeFromWatchlist, watchlist } = useContext(WatchlistContext);
   
@@ -31,7 +35,8 @@ export function MovieItem({
         movieUrl,
         title,
         releaseDate,
-        genreId, genre
+        genreId,
+         genre
       });
     }
   };
@@ -59,7 +64,11 @@ export function MovieItem({
       </div>
       <div className="movie-info h-fit px-2 pt-1 ">
         <p className="movie-title text-wrap">{title}</p>
-        <p className="genre"></p>
+        <div className="flex items-center gap-3">
+          <p className="genre">{genre}</p>
+          <Diamond size={6} style={{fill:"black"}}/>
+          <p className="mediaType">{mediaType}</p>
+        </div>
         <p className="movie-date">{releaseDate}</p>
       </div>
     </div>
@@ -68,7 +77,7 @@ export function MovieItem({
   if (movieId === null || movieId === undefined) return content;
   return (
     <>
-      <Link to={`/movie/${movieId}`}>{content}</Link>
+      <Link to={`/${mediaType} || 'movie'}/${movieId}`}>{content}</Link>
     </>
   );
 }

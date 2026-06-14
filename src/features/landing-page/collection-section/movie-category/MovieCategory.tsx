@@ -6,16 +6,20 @@ import { useEffect, useMemo, useRef, useState } from "react";
 export function MovieCategory({
   genre,
   genreId,
+  mediaType,
 }: {
   genre: string;
   genreId: number;
+  mediaType?: "tv" | "movie";
 }) {
   const [movies, setMovies] = useState<any>([]);
   const [loading, setLoading] = useState(true);
   const rowRef = useRef<HTMLDivElement>(null);
 
   const validMovies = useMemo(() => {
-    return movies.filter((movie: any) => movie.backdrop_path && movie.title);
+    return movies.filter(
+      (movie: any) => movie.backdrop_path && (movie.title || movie.name),
+    );
   }, [movies]);
 
   const scrollLeft = () => {
@@ -33,8 +37,8 @@ export function MovieCategory({
     });
   }, [genreId]);
 
-    //skeleton card is a function so that it is reusable
-    // (so react gets a fresh copy each time)
+  //skeleton card is a function so that it is reusable
+  // (so react gets a fresh copy each time)
   const SkeletonCard = () => (
     <div className="shrink-0 w-50 h-67 rounded-sm bg-gray-300 animate-pulse" />
   );
@@ -53,8 +57,8 @@ export function MovieCategory({
           }}
           ref={rowRef}
         >
-            {/* note: the (_) in map means i am ignoring the items in the array */}
-            {/* also Array.from({ length: 6 }) creates [undefined, undefined, undefined, undefined, undefined, undefined] */}
+          {/* note: the (_) in map means i am ignoring the items in the array */}
+          {/* also Array.from({ length: 6 }) creates [undefined, undefined, undefined, undefined, undefined, undefined] */}
           {loading
             ? Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)
             : validMovies.map((movie) => (
@@ -62,8 +66,10 @@ export function MovieCategory({
                   movieId={movie.id}
                   key={movie.id}
                   movieUrl={`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`}
-                  title={movie.title}
-                  releaseDate={movie.release_date}
+                  title={movie.title || movie.name}
+                  releaseDate={movie.release_date || movie.first_air_date}
+                  genre={genre}
+                  mediaType={movie.media_type || mediaType || 'movie'}
                 />
               ))}
         </div>

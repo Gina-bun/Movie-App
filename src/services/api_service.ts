@@ -15,10 +15,13 @@ export const getMovies = async (genreId: number) => {
         })
     ])
 
-    return [
-        ...movies.data.results,
-        ...tvShows.data.results
+    const combined = [
+        ...movies.data.results.map((m: any) => ({ ...m, media_type: 'movie' })),
+        ...tvShows.data.results.map((m: any) => ({ ...m, media_type: 'tv' }))
     ]
+
+   // shuffle like shuffling a deck of cards
+    return combined.sort(() => Math.random() - 0.5)
 }
 
 //to fetch trending movies
