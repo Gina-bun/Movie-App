@@ -31,6 +31,7 @@ export function MovieItem({
         movieUrl,
         title,
         releaseDate,
+        genreId, genre
       });
     }
   };
@@ -58,6 +59,7 @@ export function MovieItem({
       </div>
       <div className="movie-info h-fit px-2 pt-1 ">
         <p className="movie-title text-wrap">{title}</p>
+        <p className="genre">{genre}</p>
         <p className="movie-date">{releaseDate}</p>
       </div>
     </div>

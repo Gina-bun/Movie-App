@@ -10,19 +10,22 @@ export function Searchbar() {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
-  const closeSearchPopup = useRef<HTMLDivElement>(null)
+  const closeSearchPopup = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-       if(closeSearchPopup.current && !closeSearchPopup.current.contains(event.target as Node)){
-        setIsOpen(false)
-    }
-  }
+      if (
+        closeSearchPopup.current &&
+        !closeSearchPopup.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
 
-  document.addEventListener("mousedown", handleClickOutside)
+    document.addEventListener("mousedown", handleClickOutside);
 
-  return () => document.removeEventListener("mousedown", handleClickOutside)
-  }, [])
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const debouncedSearch = useRef(
     debounce(async (searchTerm: string) => {
@@ -35,15 +38,15 @@ export function Searchbar() {
       const data = await searchMovies(searchTerm);
       setResults(data);
       setIsOpen(true);
-    }, 500)
-  ).current
+    }, 500),
+  ).current;
 
   useEffect(() => {
     debouncedSearch(query);
   }, [query]);
 
   const handleSelect = (movie: any) => {
-    navigate(`/movie/${movie.id}`);
+    navigate(`/${movie.media_type}/${movie.id}`);
     setQuery("");
     setIsOpen(false);
   };
@@ -66,17 +69,26 @@ export function Searchbar() {
         </div>
 
         {isOpen && results.length > 0 && (
-          <div 
-          style={{position: "absolute"}}
-          className="search-dropdown bg-amber-50 mt-2 p-2 max-sm:w-70 max-md:w-60 rounded-md">
+          <div
+            style={{ position: "absolute" }}
+            className="search-dropdown bg-amber-50 mt-2 p-2 max-sm:w-70 max-md:w-60 rounded-md"
+          >
             {results.map((movie) => (
               <div
                 key={movie.id}
                 onClick={() => handleSelect(movie)}
                 className="search-result-item"
               >
-                <p>{movie.title || movie.name} {movie.genre}</p>
-                <p>{`${new Date(movie.release_date).getFullYear()}`}</p>
+                <p>
+                  {movie.title || movie.name} {movie.genre}
+                </p>
+                <p>
+                  {movie.release_date
+                    ? new Date(movie.release_date).getFullYear()
+                    : movie.first_air_date
+                      ? new Date(movie.first_air_date).getFullYear()
+                      : "N/A"}
+                </p>
               </div>
             ))}
           </div>

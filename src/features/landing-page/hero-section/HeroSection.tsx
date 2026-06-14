@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getGenres, getTrendingMovies } from "../../../services/api_service";
+import { getMovieGenres, getTrendingMovies } from "../../../services/api_service";
 import { ButtonRegular } from "../../../components/ui(global)/buttons/action-buttons/ButtonRegular";
 import "./HeroSection.css";
 import { Diamond } from "lucide-react";
@@ -20,7 +20,7 @@ export function HeroSection() {
 
   //to get the genres
   useEffect(() => {
-    getGenres().then(setGenres)
+    getMovieGenres().then(setGenres)
   }, [])
 
   //to display top 10 trending movies in hero section

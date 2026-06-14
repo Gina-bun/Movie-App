@@ -1,26 +1,42 @@
 import { MovieCategory } from "./movie-category/MovieCategory"
-import { getGenres } from "../../../services/api_service"
+import { getMovieGenres, getTVGenres } from "../../../services/api_service"
 import { useEffect, useState } from "react"
 
 export function MovieCollection(){
 
-    const [genres, setGenres] = useState<any>([])
+    const [movieGenres, setMovieGenres] = useState<any[]>([])
+    const [tvGenres, setTVGenres] = useState<any[]>([])
 
     useEffect(() => {
-        getGenres().then((genres) => {
-            setGenres(genres)
-        })
+        // getMovieGenres().then((genres) => {
+        //     setGenres(genres)
+
+        // })
+        getMovieGenres().then(setMovieGenres)
+        getTVGenres().then(setTVGenres)
     }, [])
 
     return (
         <>
         <div className="collection p-2">
             {
-                genres.map((genre: any) => (
+                movieGenres.map((genre: any) => (
                     <MovieCategory
-                    key={genre.id}
+                    key={`movie-${genre.id}`}
                     genre={genre.name}
-                    genreId={genre.id}                  />
+                    genreId={genre.id}  
+                    mediaType="movie"               
+                     />
+                ))
+            }
+               {
+                tvGenres.map((genre: any) => (
+                    <MovieCategory
+                    key={`tv-${genre.id}`}
+                    genre={genre.name}
+                    genreId={genre.id}  
+                    mediaType="tv"               
+                     />
                 ))
             }
         </div>

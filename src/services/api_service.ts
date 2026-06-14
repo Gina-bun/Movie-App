@@ -1,14 +1,13 @@
 import axios from "axios";
 
-
-
+// FOR MOVIES
 const BASE_URL = "https://api.themoviedb.org/3"
 const API_KEY = import.meta.env.VITE_API_KEY
 
 //to fetch movies by genre
-export const getMovies = async (genreId: number) => {
+export const getMovies = async (genreId: number, mediaType: 'movie' | 'tv' = 'movie') => {
 
-    const response = await axios.get(`${BASE_URL}/discover/movie`, {
+    const response = await axios.get(`${BASE_URL}/discover/${mediaType}`, {
     params: {api_key: API_KEY, with_genres: genreId}
 })
     return response.data.results
@@ -16,7 +15,7 @@ export const getMovies = async (genreId: number) => {
 
 //to fetch trending movies
 export const getTrendingMovies = async () => {
-    const response = await axios.get(`${BASE_URL}/trending/movie/all/week`, {
+    const response = await axios.get(`${BASE_URL}/trending/movie/week`, {
         params: {api_key: API_KEY}
     })
     return response.data.results
@@ -25,7 +24,7 @@ export const getTrendingMovies = async () => {
 }
 
 //to fetch movie genres
-export const getGenres = async () => {
+export const getMovieGenres = async () => {
     const response = await axios.get(`${BASE_URL}/genre/movie/list`, {
         params: {api_key: API_KEY}
     })
@@ -49,5 +48,13 @@ export const searchMovies = async (searchedMovie: string) => {
     })
 
     return response.data.results.slice(0, 5)//display only 5 movies in search results at a time
+}
+
+// FOR TV shows
+export const getTVGenres = async () => {
+    const response = await axios.get(`${BASE_URL}/genre/tv/list`, {
+        params: {api_key: API_KEY}
+    })
+    return response.data.genres
 }
 
