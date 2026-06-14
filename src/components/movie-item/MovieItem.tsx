@@ -35,11 +35,15 @@ export function MovieItem({
         movieUrl,
         title,
         releaseDate,
-        genreId,
          genre
       });
     }
   };
+
+  //normalizing the date
+   const movieYear = releaseDate 
+    ? new Date(releaseDate).getFullYear()
+    : 'N/A'
 
   const content = (
     <div className="movie-item flex flex-col shrink-0 border rounded-sm h-67 bg-amber-200 w-50">
@@ -69,7 +73,7 @@ export function MovieItem({
           <Diamond size={6} style={{fill:"black"}}/>
           <p className="mediaType">{mediaType}</p>
         </div>
-        <p className="movie-date">{releaseDate}</p>
+        <p className="movie-date">{movieYear}</p>
       </div>
     </div>
   );
@@ -77,7 +81,7 @@ export function MovieItem({
   if (movieId === null || movieId === undefined) return content;
   return (
     <>
-      <Link to={`/${mediaType} || 'movie'}/${movieId}`}>{content}</Link>
+      <Link to={`/${mediaType || 'movie'}/${movieId}`}>{content}</Link>
     </>
   );
 }

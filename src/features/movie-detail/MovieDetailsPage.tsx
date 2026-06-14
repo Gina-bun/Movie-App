@@ -22,7 +22,7 @@ export function MovieDetailsPage() {
   }, [movieId, isTV]);
 
   if (!movieItem) {
-    return <div>Loading...</div>;
+    return <div className="h-screen gray animate-pulse"></div>;
   }
 
   const title = movieItem.title || movieItem.name
@@ -124,7 +124,7 @@ export function MovieDetailsPage() {
             {cast.map((castMember) => (
               <div key={castMember.cast_id} className="w-fit text-center">
                 <div
-                  className="w-25 h-25 rounded-full"
+                  className="w-25 h-25 rounded-full bg-gray-300"
                   style={{
                     backgroundImage: `url(https://image.tmdb.org/t/p/original${castMember.profile_path})`,
                     backgroundPosition: "center",
@@ -133,7 +133,7 @@ export function MovieDetailsPage() {
                 ></div>
 
                 <p>{castMember.character}</p>
-                <p>{castMember.name}</p>
+                <p className="hidden sm:block">{castMember.name}</p>
               </div>
             ))}
           </div>
@@ -182,6 +182,8 @@ export function MovieDetailsPage() {
                   movieUrl={`https://image.tmdb.org/t/p/w500${tvshow.backdrop_path}`}
                   title={tvshow.title || tvshow.name}
                   releaseDate={movieYear}
+                  genre={genre}
+                  mediaType={tvshow.media_type || 'movie'}
                 />
               </div>
             ))}
