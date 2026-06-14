@@ -6,11 +6,9 @@ import { useEffect, useMemo, useRef, useState } from "react";
 export function MovieCategory({
   genre,
   genreId,
-  mediaType
 }: {
   genre: string;
   genreId: number;
-  mediaType: "movie" | "tv"
 }) {
   const [movies, setMovies] = useState<any>([]);
   const [loading, setLoading] = useState(true);

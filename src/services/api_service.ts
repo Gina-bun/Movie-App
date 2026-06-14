@@ -4,13 +4,21 @@ import axios from "axios";
 const BASE_URL = "https://api.themoviedb.org/3"
 const API_KEY = import.meta.env.VITE_API_KEY
 
-//to fetch movies by genre
-export const getMovies = async (genreId: number, mediaType: 'movie' | 'tv' = 'movie') => {
+//get movies AND tv shows
+export const getMovies = async (genreId: number) => {
+    const [movies, tvShows] = await Promise.all([
+        axios.get(`${BASE_URL}/discover/movie`, {
+            params: { api_key: API_KEY, with_genres: genreId }
+        }),
+        axios.get(`${BASE_URL}/discover/tv`, {
+            params: { api_key: API_KEY, with_genres: genreId }
+        })
+    ])
 
-    const response = await axios.get(`${BASE_URL}/discover/${mediaType}`, {
-    params: {api_key: API_KEY, with_genres: genreId}
-})
-    return response.data.results
+    return [
+        ...movies.data.results,
+        ...tvShows.data.results
+    ]
 }
 
 //to fetch trending movies
